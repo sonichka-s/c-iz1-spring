@@ -1,7 +1,0 @@
-# ninja log v5
-138	233	1646603457337361208	src/blog_data/libblog_data.a	701e25321ce82ca0
-233	244	1646603457349360716	src/storage/libstorage.a	ffba8fa0f8edae5a
-2	101	1646603457205366616	src/storage/CMakeFiles/storage.dir/storage.c.o	58f9a7f9942f5060
-1	138	1646603457241365141	src/blog_data/CMakeFiles/blog_data.dir/blog_data.c.o	d696b4432d86d478
-3	111	1646603457213366288	cmd/CMakeFiles/main.dir/main.c.o	7f9801df14b137f9
-244	291	1646603457393358913	cmd/main	64ead09d2d96c9d0
