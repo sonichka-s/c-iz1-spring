@@ -1,0 +1,142 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16.3"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"jsonFile" : "directory-src-Debug-b6cf2213fc5053b67c22.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16.3"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/blog_data",
+					"jsonFile" : "directory-src.blog_data-Debug-0fdf297228c43ec8ad55.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16.3"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/blog_data",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "src/storage",
+					"jsonFile" : "directory-src.storage-Debug-562a8614a868c92e8ea3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16.3"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/storage",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "cmd",
+					"jsonFile" : "directory-cmd-Debug-f8f24b457c0ba1491479.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16.3"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "cmd",
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"name" : "tp_1_iz",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "blog_data::@e5375206b2504dff6780",
+					"jsonFile" : "target-blog_data-Debug-16a6d58ea54720f42e46.json",
+					"name" : "blog_data",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "main::@7845b002ed1de3d31a31",
+					"jsonFile" : "target-main-Debug-5fa231a7b3395c3e3687.json",
+					"name" : "main",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "storage::@f9bb3bf387c1b34d62bb",
+					"jsonFile" : "target-storage-Debug-2efb7cca5ba171d51c53.json",
+					"name" : "storage",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/sonichka/Documents/here we go again/c-1/c-iz1-spring/cmake-build-debug",
+		"source" : "/home/sonichka/Documents/here we go again/c-1/c-iz1-spring"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
