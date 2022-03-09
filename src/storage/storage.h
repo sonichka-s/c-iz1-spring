@@ -8,7 +8,7 @@ typedef struct {
     size_t capacity;
 } Storage;
 
-Storage* storage(Post* post, size_t length, size_t capacity);
+Storage* storage();
 void addPost(Storage* storage, char* name, char* content, char** tags, char** comments, int likes, int d, int m, int y);
 void printStorage(Storage* storage);
 void commentFilter(Storage* storage);

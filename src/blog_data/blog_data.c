@@ -2,7 +2,7 @@
 #include "blog_data.h"
 
 Post* post(char* name, char* content, char** tags, char** comments, int likes, int d, int m, int y) {
-    Post* buf = (Post*)malloc(sizeof(Post));
+    Post* buf = (Post*) malloc(sizeof(Post));
 
     if (buf == NULL) {
         return NULL;
