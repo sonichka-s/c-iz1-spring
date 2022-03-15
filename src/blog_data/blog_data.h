@@ -1,10 +1,12 @@
 #pragma once
+#include "comments_storage.h"
+#include "tags_storage.h"
 
 typedef struct {
-    char* name;
-    char* content;
-    char** tags;
-    char** comments;
+    char *name;
+    char *content;
+    Tags_storage *tags;
+    Comment_storage *comments;
     int likes;
     int day;
     int month;
@@ -12,4 +14,5 @@ typedef struct {
 
 } Post;
 
-Post* post(char* name, char* content, char** tags, char** comments, int likes, int d, int m, int y);
+Post *post();
+void freePost(Post *post);

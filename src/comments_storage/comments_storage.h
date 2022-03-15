@@ -2,9 +2,10 @@
 #include "stdlib.h"
 
 typedef struct {
-    char *comment;
+    char **comment;
     size_t length;
-    size_t capacity;
-} Comment;
+} Comment_storage;
 
-Comment *comment();
+Comment_storage *comment_storage();
+void addComment(Comment_storage *comment_storage, char *comment);
+void freeCStorage(Comment_storage *s);

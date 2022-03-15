@@ -9,8 +9,10 @@ typedef struct {
 } Storage;
 
 Storage* storage();
-void addPost(Storage* storage, char* name, char* content, char** tags, char** comments, int likes, int d, int m, int y);
+Post* getPost(char *rowData);
+void updateStorage(Storage *storage, Post *post);
 void printStorage(Storage* storage);
 void commentFilter(Storage* storage);
 void likeFilter(Storage* storage);
 void freeStorage(Storage* storage);
+void fillStorage(Storage *storage);
