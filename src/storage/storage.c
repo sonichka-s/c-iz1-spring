@@ -3,9 +3,9 @@
 #include "stdio.h"
 #include "storage.h"
 #include "blog_data.h"
-#include "tags_storage.h"
-#include "comments_storage.h"
+#include "string_storage.h"
 #include "ctype.h"
+#define INIT_LENGTH 100
 
 Storage *storage() {
     Storage* buf = (Storage *) malloc(sizeof(Storage *));
@@ -13,66 +13,80 @@ Storage *storage() {
     if (buf == NULL)
         return NULL;
 
-    buf->post = NULL;
     buf->length = 0;
     buf->capacity = 1;
+    buf->post = NULL;
 
     return buf;
 }
 
-Post* getPost(char* rawData) {
+static Post* getPost(char* rawData) {
     Post *post = (Post *) malloc(sizeof(Post));
+
+    if(post == NULL)
+        return NULL;
+
     char *post_str[8];
-    Tags_storage *tag_arr = tags_storage();
-    Comment_storage *com_arr = comment_storage();
+    String_storage *tag_arr = string_storage();
+
+    if(tag_arr == NULL)
+        return NULL;
+
+    String_storage *com_arr = string_storage();
+
+    if(com_arr == NULL)
+        return NULL;
 
 
     char *token = strtok(rawData, " ");
 
-    for (int i = 0; i < 8; ++i) {
-        if (i == 2) {
-            while (token[0] == '#') {
-                addTag(tag_arr, token);
-                token = strtok(NULL, " ");
-            }
-            post_str[i] = NULL;
-            continue;
+    if(token == NULL)
+        return NULL;
+
+    post->name = token;
+    token = strtok(NULL, " ");
+
+    post->content = token;
+    token = strtok(NULL, " ");
+
+
+
+    while (!isdigit(token[0])) {
+        if (token[0] == '#') {
+            addStr(tag_arr, token);
+            token = strtok(NULL, " ");
         }
 
-        if (i == 3) {
-            while (!(isdigit(token[0]))) {
-                addComment(com_arr, token);
-                token = strtok(NULL, " ");
-            }
-            post_str[i] = NULL;
-            continue;
+        else {
+            addStr(com_arr, token);
+            token = strtok(NULL, " ");
         }
-
-        post_str[i] = token;
-        token = strtok(NULL, " ");
     }
 
-    post->name = post_str[0];
-    post->content = post_str[1];
     post->tags = tag_arr;
     post->comments = com_arr;
-    post->likes = atoi(post_str[4]);
-    post->day = atoi(post_str[5]);
-    post->month = atoi(post_str[6]);
-    post->year = atoi(post_str[7]);
 
-//    freePost(post);
+    post->likes = atoi(token);
+    token = strtok(NULL, " ");
+
+    post->day = atoi(token);
+    token = strtok(NULL, " ");
+
+    post->month = atoi(token);
+    token = strtok(NULL, " ");
+
+    post->year = atoi(token);
+
     return post;
-
 }
 
-void updateStorage(Storage *storage, Post *post) {
+static void updateStorage(Storage *storage, Post *post) {
     if (storage == NULL || post == NULL)
         return;
 
     if (storage->length + 1 >= storage->capacity) {
         storage->capacity *= 2;
-        storage->post = (Post *) realloc(storage->post, sizeof(Post *) * storage->capacity);
+        storage->post = (Post *) realloc(storage->post, sizeof(Post) * storage->capacity);
 
         if (storage->post == NULL)
             return;
@@ -82,59 +96,83 @@ void updateStorage(Storage *storage, Post *post) {
     storage->length += 1;
 }
 
-
-
 void printStorage(Storage* storage) {
+    commentSort(storage);
     for (size_t i = 0; i < storage->length; ++i) {
-        printf("name: ");
-        puts(storage->post[i].name);
-        printf("\n");
-        printf("content: ");
-        puts(storage->post[i].content);
-        printf("\n");
-        printf("tags: ");
+        printf("name: %s\n", storage->post[i].name);
+        printf("content: %s\n", storage->post[i].content);
+        printf("tags: \n");
 
-        for (int j = 0; j < storage->post[i].tags->length; ++j) {
-            puts(storage->post[i].tags->tag[i]);
-            printf(" ");
-        }
-        printf("\n");
-        printf("comments: ");
+        printSStorage(storage->post[i].tags);
 
-        for (int j = 0; j < storage->post[i].comments->length; ++j) {
-            puts(storage->post[i].comments->comment[i]);
-            printf(" ");
-        }
+        printf("comments: \n");
+
+        printSStorage(storage->post[i].comments);
+
+        printf("likes: %i\n", storage->post[i].likes);
+        printf("Date: %d.%d.%d\n", storage->post[i].day, storage->post[i].month, storage->post[i].year);
         printf("\n");
-        printf("likes: %i", storage->post[i].likes);
-        printf("Date:  %d.%d.%d", storage->post[i].day, storage->post[i].month, storage->post[i].year);
     }
 }
 
 void fillStorage(Storage *storage) {
     FILE *f = fopen("../input.txt", "r");
-    char temp[1000];
-    char *postString;
+    size_t max_len = 100;
+    ssize_t  len = 0;
 
     if (f == NULL)
         perror("File open error");
 
-    while (1) {
-        postString = fgets(temp, 1000, f);
-        Post *post = getPost(postString);
-        updateStorage(storage, post);
+    while (len != -1) {
+        char *postString = NULL;
+        len = getline(&postString, &max_len, f);
 
-        if (postString == NULL) {
-            if (feof(f) != 0) {
-                break;
-            }
+        if(len != -1) {
+            Post *post = getPost(postString);
+            updateStorage(storage, post);
+        }
+    }
+}
 
-            else {
-                perror("File open error");
-                break;
+static void commentSort(Storage *s) {
+    for (size_t i = 0; i < s->length - 1; ++i) {
+        for (size_t j = (s->length) - 1; i < j; --j) {
+            if (s->post[j - 1].comments->length < s->post[j].comments->length) {
+                Post temp = s->post[j - 1];
+                s->post[j - 1] = s->post[j];
+                s->post[j] = temp;
             }
         }
     }
 }
+
+void postFilter(Storage* storage, int cur_month, int cur_year, int n, int min_likes) {
+    commentSort(storage);
+    size_t counter = 0;
+    for (int i = 0; i < storage->length; ++i) {
+        if (storage->post[i].month == cur_month && storage->post[i].year == cur_year && counter != n && storage->post[i].likes >= min_likes) {
+            printf("name: %s\n", storage->post[i].name);
+            printf("content: %s\n", storage->post[i].content);
+            printf("tags: \n");
+
+            printSStorage(storage->post[i].tags);
+
+            printf("comments: \n");
+
+            printSStorage(storage->post[i].comments);
+
+            printf("likes: %i\n", storage->post[i].likes);
+            printf("Date: %d.%d.%d\n", storage->post[i].day, storage->post[i].month, storage->post[i].year);
+            printf("\n");
+
+            counter++;
+        }
+    }
+}
+
+void freeStorage(Storage* storage) {
+    freePost(storage->post);
+}
+
 
 
