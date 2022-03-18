@@ -13,5 +13,4 @@ typedef struct {
 
 } Post;
 
-Post *post();
 void freePost(Post *post);

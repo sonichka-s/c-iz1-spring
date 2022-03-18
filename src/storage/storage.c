@@ -80,6 +80,10 @@ static Post* getPost(char* rawData) {
     return post;
 }
 
+Post *getPostTest(char *rawData) {
+    return getPost(rawData);
+}
+
 static void updateStorage(Storage *storage, Post *post) {
     if (storage == NULL || post == NULL)
         return;
@@ -94,6 +98,10 @@ static void updateStorage(Storage *storage, Post *post) {
 
     storage->post[storage->length] = *post;
     storage->length += 1;
+}
+
+void updateStorageTest(Storage *storage, Post *post) {
+    updateStorage(storage, post);
 }
 
 void printStorage(Storage* storage) {
@@ -144,6 +152,10 @@ static void commentSort(Storage *s) {
             }
         }
     }
+}
+
+void commentSortTest(Storage *s) {
+    commentSort(s);
 }
 
 void postFilter(Storage* storage, int cur_month, int cur_year, int n, int min_likes) {
