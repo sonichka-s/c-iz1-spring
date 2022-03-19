@@ -12,6 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: installing c++/c compiler
+        run: sudo apt install build-essential
+
+      - name: installing git
+        run: sudo apt install git
+
+      - name: installing lcov
+        run: sudo apt install lcov
+
+      - name: installing valgrind
+        run: sudo apt install valgrind
+
       - name: installing valgrind
         run: sudo apt install valgrind
 
