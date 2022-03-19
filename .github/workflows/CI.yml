@@ -36,6 +36,9 @@ jobs:
       - name: preparing-lcov
         run: mkdir coverage && mkdir coverage-output
 
+      - name: generate-gcov
+        run: cd build && gcov ../build/src/storage/CMakeFiles/storage.dir/storage.c.gcno && cp -rf ../build/src/storage/CMakeFiles/storage.dir/ .
+
       - name: generate-lcov
         run: lcov --capture --directory=coverage --output-file=coverage.info
 
