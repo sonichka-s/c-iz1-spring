@@ -1,2 +1,0 @@
-/usr/bin/ar qc libblog_data.a  CMakeFiles/blog_data.dir/blog_data.c.o
-/usr/bin/ranlib libblog_data.a

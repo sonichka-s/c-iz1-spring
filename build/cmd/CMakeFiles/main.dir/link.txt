@@ -1,1 +1,0 @@
-/usr/bin/cc --coverage   CMakeFiles/main.dir/main.c.o  -o main  ../src/storage/libstorage.a ../src/blog_data/libblog_data.a ../src/string_storage/libstring_storage.a 

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libstring_storage.a  CMakeFiles/string_storage.dir/string_storage.c.o
-/usr/bin/ranlib libstring_storage.a

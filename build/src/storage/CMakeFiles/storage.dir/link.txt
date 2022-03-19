@@ -1,2 +1,0 @@
-/usr/bin/ar qc libstorage.a  CMakeFiles/storage.dir/storage.c.o
-/usr/bin/ranlib libstorage.a
