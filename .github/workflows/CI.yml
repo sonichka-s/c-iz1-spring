@@ -27,8 +27,8 @@ jobs:
       - name: build-project
         run: make build
 
-      - name: running tests
-        run: ./build
+#      - name: running tests
+#        run: ./build/tests
 
       - name: get test coverage
         run: make get-all-coverage
