@@ -12,11 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: installing c++/c compiler
-        run: sudo apt install build-essential
-
-      - name: installing git
-        run: sudo apt install git
+#      - name: installing c++/c compiler
+#        run: sudo apt install build-essential
+#
+#      - name: installing git
+#        run: sudo apt install git
 
       - name: installing lcov
         run: sudo apt install lcov
@@ -28,7 +28,7 @@ jobs:
         run: make build
 
       - name: running tests
-        run: make run-tests
+        run: ./build
 
       - name: get test coverage
         run: make get-all-coverage

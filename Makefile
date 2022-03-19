@@ -1,5 +1,5 @@
 build:
-	 mkdir build && cd build && cmake .. && make
+	 mkdir build && cd build && cmake .. && cmake --build . && make
 
 run:
 	./build/src/main
