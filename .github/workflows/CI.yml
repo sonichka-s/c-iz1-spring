@@ -33,6 +33,17 @@ jobs:
       - name: get test coverage
         run: make get-all-coverage
 
+      - name: preparing-lcov
+        run: mkdir coverage && mkdir coverage-output
+
+      - name: generate-lcov
+        run: lcov --coverage --directory=coverage --output-file=coverage.info
+
+      - name: generate-coverage-html
+        run: genhtml coverage.info --output-directory=coverage-output
+
+
+
 
 
 
