@@ -123,8 +123,27 @@ void printStorage(Storage* storage) {
     }
 }
 
-void fillStorage(Storage *storage) {
-    FILE *f = fopen("../input.txt", "r");
+void fillStorage(Storage *storage, char *input_file) {
+    FILE *f = fopen(input_file, "r");
+    size_t max_len = 100;
+    ssize_t  len = 0;
+
+    if (f == NULL)
+        perror("File open error");
+
+    while (len != -1) {
+        char *postString = NULL;
+        len = getline(&postString, &max_len, f);
+
+        if(len != -1) {
+            Post *post = getPost(postString);
+            updateStorage(storage, post);
+        }
+    }
+}
+
+void fillStorageTest(Storage *storage, char *file_data) {
+    FILE *f = fmemopen(file_data, strlen(file_data), "r");
     size_t max_len = 100;
     ssize_t  len = 0;
 
@@ -183,7 +202,9 @@ void postFilter(Storage* storage, int cur_month, int cur_year, int n, int min_li
 }
 
 void freeStorage(Storage* storage) {
-    freePost(storage->post);
+    if (storage->post != NULL)
+        freePost(storage->post);
+    free(storage);
 }
 
 

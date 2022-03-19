@@ -10,7 +10,7 @@ String_storage* string_storage() {
     if (buf == NULL)
         return NULL;
 
-    buf->str = (char **) malloc(sizeof(char *) * INIT_LENGTH);
+    buf->str = NULL;
     buf->length = 0;
 
     return buf;
@@ -19,6 +19,9 @@ String_storage* string_storage() {
 void addStr(String_storage *string_storage, char *str) {
     if(string_storage == NULL)
         return;
+
+    if(string_storage->str == NULL)
+        string_storage->str = (char **) malloc(sizeof(char *) * INIT_LENGTH);
 
     if(string_storage->length + 1 >= INIT_LENGTH) {
         string_storage->str = (char **) realloc(string_storage->str, sizeof(char *) * string_storage->length * INIT_LENGTH * 2);
@@ -37,8 +40,6 @@ void printSStorage(String_storage *s) {
 }
 
 void freeSStorage(String_storage *s) {
-    for (int i = 0; i <s->length; ++i)
-        free(s->str[i]);
     free(s->str);
 }
 

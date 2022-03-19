@@ -3,8 +3,9 @@
 #include "string_storage.h"
 
 void freePost(Post *post) {
-    free(post->name);
-    free(post->content);
-    freeSStorage(post->tags);
-    freeSStorage(post->comments);
+    if (post->tags != NULL)
+        freeSStorage(post->tags);
+    if (post->comments != NULL)
+        freeSStorage(post->comments);
+    free(post);
 }

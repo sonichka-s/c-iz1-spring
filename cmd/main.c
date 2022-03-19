@@ -7,8 +7,9 @@
 int main() {
     Storage *s = storage();
 
-    fillStorage(s);
+    fillStorage(s, "../input.txt");
     postFilter(s, 12, 20, 2, 9);
+    freeStorage(s);
 
     return 0;
 }
