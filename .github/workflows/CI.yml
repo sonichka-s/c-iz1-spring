@@ -22,10 +22,7 @@ jobs:
         run: sudo apt install lcov
 
       - name: installing valgrind
-        run: sudo apt install valgrind
-
-      - name: installing valgrind
-        run: sudo apt install valgrind
+        run: make valgrind-install
 
       - name: install gtest
         run: sudo apt install libgtest-dev

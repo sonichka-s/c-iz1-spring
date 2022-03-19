@@ -7,6 +7,9 @@ run:
 run-tests:
 	./build/tests
 
+valgrind-install:
+	apt-get update && sudo apt install valgrind
+
 valgrind-check:
 	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --undef-value-errors=no --verbose --log-file=$(filename)  $(directory)
 
