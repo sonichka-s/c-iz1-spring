@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/blog_data/blog_data.h
+string_storage.h
+../src/blog_data/string_storage.h
+
+../src/string_storage/string_storage.h
+stdlib.h
+../src/string_storage/stdlib.h
+
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/storage.c
+stdlib.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/stdlib.h
+string.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/string.h
+stdio.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/stdio.h
+storage.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/storage.h
+blog_data.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/blog_data.h
+string_storage.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/string_storage.h
+ctype.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/ctype.h
+
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/storage.h
+stdlib.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/stdlib.h
+blog_data.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/storage/blog_data.h
+

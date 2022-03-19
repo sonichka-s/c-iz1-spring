@@ -1,0 +1,1 @@
+/usr/bin/c++   -fprofile-arcs -ftest-coverage   CMakeFiles/tests.dir/main.cpp.o CMakeFiles/tests.dir/tests.cpp.o  -o tests  /usr/lib/x86_64-linux-gnu/libgtest.a ../src/blog_data/libblog_data.a ../src/storage/libstorage.a ../src/string_storage/libstring_storage.a -lpthread ../src/blog_data/libblog_data.a ../src/string_storage/libstring_storage.a 

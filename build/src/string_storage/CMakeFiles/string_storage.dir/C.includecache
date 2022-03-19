@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/string_storage/string_storage.c
+stdlib.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/string_storage/stdlib.h
+stdio.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/string_storage/stdio.h
+string_storage.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/string_storage/string_storage.h
+string.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/string_storage/string.h
+
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/string_storage/string_storage.h
+stdlib.h
+/home/sonichka/Documents/here_we_go_again/c-1/c-iz1-spring/src/string_storage/stdlib.h
+
