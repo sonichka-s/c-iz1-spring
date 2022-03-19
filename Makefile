@@ -7,17 +7,15 @@ run:
 run-tests:
 	./build/tests
 
-valgrind-install:
-	sudo apt-get install valgrind
+generate-lcov:
+	lcov --coverage --directory=coverage --output-file=coverage.info
 
-valgrind-check:
-	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --undef-value-errors=no --verbose --log-file=$(filename)  $(directory)
+generate-coverage-html:
+	genhtml coverage.info --output-directory=coverage-output
 
-valgrind:
-	mkdir valgrind_output && make valgrind-check directory=./build/tests filename=valgrind_output/report
+get-coverage:
+	mkdir coverage && mkdir coverage_output && make generate-lcov && make generate-coverage-html
 
-valgrind-check-tests:
-	make valgrind-check directory=./build/tests filename=valgrind_output/storage_report
+get-all-coverage:
+	make get-coverage
 
-valgrind-check-all:
-	mkdir valgrind_output && make valgrind-check-tests

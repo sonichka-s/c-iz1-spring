@@ -21,9 +21,6 @@ jobs:
       - name: installing lcov
         run: sudo apt install lcov
 
-      - name: installing valgrind
-        run: make valgrind-install
-
       - name: install gtest
         run: sudo apt install libgtest-dev
 
@@ -33,9 +30,8 @@ jobs:
       - name: running tests
         run: make run-tests
 
-      - name: check for memory leaks
-        run: make valgrind-check-all
-
+      - name: get test coverage
+        run: make get-all-coverage
 
 
 
