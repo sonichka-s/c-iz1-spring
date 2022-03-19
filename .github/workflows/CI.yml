@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [ dev, main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: installing lcov
+        run: sudo apt install lcov
+
+      - name: install gtest
+        run: sudo apt install libgtest-dev
+
+      - name: build-project
+        run: make build
+
+      - name: running tests
+        run: ./build/tests/tests
+
+#      - name: get test coverage
+#        run: make get-all-coverage
+
+      - name: preparing-lcov
+        run: mkdir coverage && mkdir coverage-output
+
+      - name: generate-gcov
+        run: cd build && gcov ../build/src/storage/CMakeFiles/storage.dir/storage.c.gcno && cp -rf ../build/src/storage/CMakeFiles/storage.dir/ .
+
+      - name: generate-lcov
+        run: lcov --capture --directory=coverage --output-file=coverage.info
+
+      - name: generate-coverage-html
+        run: genhtml coverage.info --output-directory=coverage-output
+
+
+
+
+
+
