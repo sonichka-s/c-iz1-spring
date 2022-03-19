@@ -11,7 +11,7 @@ const size_t length = 1;
 const size_t capacity = 2;
 
 //string:
-char test_str[] = "name content #tag1 #tag2 comment1 comment2 1 1 1 1";
+char test_str[] = "name1 content1 #tag1 #tag2 comment1 comment2 1 1 1 1";
 
 //elements:
 const char first_name[] = "name1";
@@ -35,8 +35,8 @@ TEST(initializion, string_constructor) {
     ASSERT_EQ(def_string_storage->str, test_string_storage->str);
     ASSERT_EQ(def_string_storage->length, test_string_storage->length);
 
-    freeSStorage(def_string_storage);
-    freeSStorage(test_string_storage);
+    free(def_string_storage);
+    free(test_string_storage);
 }
 
 TEST(initializion, storage_constructor) {
@@ -55,8 +55,8 @@ TEST(initializion, storage_constructor) {
     ASSERT_EQ(default_storage->capacity, test_storage->capacity);
 
 
-    freeStorage(test_storage);
-    freeStorage(default_storage);
+    freeStorage(&test_storage);
+    freeStorage(&default_storage);
 }
 
 TEST(storage_logic, get_post) {
@@ -68,20 +68,20 @@ TEST(storage_logic, get_post) {
     EXPECT_TRUE(test_post->tags != NULL);
     EXPECT_TRUE(test_post->comments != NULL);
 
-    EXPECT_EQ(first_name, test_post->name);
-    EXPECT_EQ(first_content, test_post->content);
+    EXPECT_EQ(0, strcmp(first_name, test_post->name));
+    EXPECT_EQ(0, strcmp(first_content, test_post->content));
     for (int i = 0; i < test_post->tags->length; ++i) {
-        EXPECT_EQ(tag_arr[i], test_post->tags->str[i]);
+        EXPECT_EQ(0, strcmp(tag_arr[i], test_post->tags->str[i]));
     }
     for (int i = 0; i < test_post->comments->length; ++i) {
-        EXPECT_EQ(comment_arr[i], test_post->comments->str[i]);
+        EXPECT_EQ(0, strcmp(comment_arr[i], test_post->comments->str[i]));
     }
     EXPECT_EQ(first_likes, test_post->likes);
     EXPECT_EQ(first_d, test_post->day);
     EXPECT_EQ(first_m, test_post->month);
     EXPECT_EQ(first_y, test_post->year);
 
-    freePost(test_post);
+    free(test_post);
 }
 
 TEST(storage_logic, update_storage) {
@@ -97,40 +97,33 @@ TEST(storage_logic, update_storage) {
     EXPECT_EQ(length, test_storage->length);
     EXPECT_EQ(capacity, test_storage->capacity);
 
-    freeStorage(test_storage);
+    freeStorage(&test_storage);
 }
 
 TEST(storage_logic, fill_storage) {
     Storage *test_storage = storage();
     EXPECT_TRUE(test_storage != NULL);
 
-    char input_str[] = "name content #tag1 #tag2 comment1 5 12 12 21\nname2 content2 #tag21 #tag22 #tag23 comment21 comment22 10 15 12 20\nname3 content3 #tag31 #tag32 comment31 comment32 comment33 39 10 07 18";
+    char input_str[] = "name1 content1 #tag1 #tag2 comment1 comment2 1 1 1 1";
     FILE *test_stream = fmemopen(test_stream, strlen(input_str), "r");
     EXPECT_TRUE(test_stream != NULL);
 
     fillStorageTest(test_storage, input_str);
 
-    Storage *expect_storage = storage();
-    char filename[] = "../input.txt";
-    fillStorage(test_storage, filename);
-
-    for (int i = 0; i < test_storage->length; ++i) {
-        EXPECT_EQ(test_storage->post[i].name, expect_storage->post[i].name);
-        EXPECT_EQ(test_storage->post[i].content, expect_storage->post[i].content);
-        for (int j = 0; j < expect_storage->post[i].tags->length; ++j) {
-            EXPECT_EQ(test_storage->post[i].tags->str[j], expect_storage->post[i].tags->str[j]);
-        }
-        for (int j = 0; j < expect_storage->post[i].comments->length; ++j) {
-            EXPECT_EQ(test_storage->post[i].comments->str[j], expect_storage->post[i].comments->str[j]);
-        }
-        EXPECT_EQ(test_storage->post[i].likes, expect_storage->post[i].likes);
-        EXPECT_EQ(test_storage->post[i].day, expect_storage->post[i].day);
-        EXPECT_EQ(test_storage->post[i].month, expect_storage->post[i].month);
-        EXPECT_EQ(test_storage->post[i].year, expect_storage->post[i].year);
+    EXPECT_EQ(0, strcmp(test_storage->post->name, first_name));
+    EXPECT_EQ(0, strcmp(test_storage->post->content, first_content));
+    for (int j = 0; j < 2; ++j) {
+        EXPECT_EQ(0, strcmp(test_storage->post->tags->str[j], tag_arr[j]));
     }
+    for (int j = 0; j < 2; ++j) {
+        EXPECT_EQ(0, strcmp(test_storage->post->comments->str[j], comment_arr[j]));
+    }
+    EXPECT_EQ(test_storage->post->likes, first_likes);
+    EXPECT_EQ(test_storage->post->day, first_d);
+    EXPECT_EQ(test_storage->post->month, first_m);
+    EXPECT_EQ(test_storage->post->year, first_y);
 
-    freeStorage(test_storage);
-    freeStorage(expect_storage);
+    freeStorage(&test_storage);
 }
 
 TEST(output_logic, comment_sort) {
@@ -151,17 +144,17 @@ TEST(output_logic, comment_sort) {
 
     Post *test_post_arr[2] = {test_post1, test_post2};
 
-    fillStorage(test_storage, input_str);
+    fillStorageTest(test_storage, input_str);
     commentSortTest(test_storage);
 
     for (int i = 0; i < test_storage->length; ++i) {
-        EXPECT_EQ(test_storage->post[i].name, test_post_arr[i]->name);
-        EXPECT_EQ(test_storage->post[i].content, test_post_arr[i]->content);
-        for (int j = 0; j < 2; ++j) {
-            EXPECT_EQ(test_storage->post[i].tags->str[j], test_post_arr[i]->tags->str[j]);
+        EXPECT_EQ(0, strcmp(test_storage->post[i].name, test_post_arr[i]->name));
+        EXPECT_EQ(0, strcmp(test_storage->post[i].content, test_post_arr[i]->content));
+        for (int j = 0; j < test_storage->post[i].tags->length; ++j) {
+            EXPECT_EQ(0, strcmp(test_storage->post[i].tags->str[j], test_post_arr[i]->tags->str[j]));
         }
-        for (int j = 0; j < 2; ++j) {
-            EXPECT_EQ(test_storage->post[i].comments->str[j], test_post_arr[i]->comments->str[j]);
+        for (int j = 0; j < test_storage->post[i].comments->length; ++j) {
+            EXPECT_EQ(0, strcmp(test_storage->post[i].comments->str[j], test_post_arr[i]->comments->str[j]));
         }
         EXPECT_EQ(test_storage->post[i].likes, test_post_arr[i]->likes);
         EXPECT_EQ(test_storage->post[i].day, test_post_arr[i]->day);
@@ -169,19 +162,17 @@ TEST(output_logic, comment_sort) {
         EXPECT_EQ(test_storage->post[i].year, test_post_arr[i]->year);
     }
 
-    freeStorage(test_storage);
-    freePost(test_post1);
-    freePost(test_post2);
+    freeStorage(&test_storage);
+    free(test_post1);
+    free(test_post2);
 }
 
 TEST(free, free_storage) {
     Storage *test_storage = storage();
-    EXPECT_TRUE(test_storage);
-    fillStorage(test_storage, test_str);
+    EXPECT_TRUE(test_storage != NULL);
+    fillStorageTest(test_storage, test_str);
 
-    freeStorage(test_storage);
-    ASSERT_TRUE(test_storage->post->tags == NULL);
-    ASSERT_TRUE(test_storage->post == NULL);
+    freeStorage(&test_storage);
     ASSERT_TRUE(test_storage == NULL);
 }
 

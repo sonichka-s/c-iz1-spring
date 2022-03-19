@@ -8,4 +8,5 @@ void freePost(Post *post) {
     if (post->comments != NULL)
         freeSStorage(post->comments);
     free(post);
+    post = NULL;
 }

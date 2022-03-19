@@ -17,6 +17,6 @@ void printStorage(Storage* storage);
 static void commentSort(Storage *s);
 void commentSortTest(Storage *s);
 void postFilter(Storage* storage, int cur_month, int cur_year, int n, int min_likes);
-void freeStorage(Storage* storage);
+void freeStorage(Storage** storage);
 void fillStorage(Storage *storage, char *input_file);
 void fillStorageTest(Storage *storage, char *file_data);

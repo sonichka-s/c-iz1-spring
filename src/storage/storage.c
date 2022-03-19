@@ -201,10 +201,31 @@ void postFilter(Storage* storage, int cur_month, int cur_year, int n, int min_li
     }
 }
 
-void freeStorage(Storage* storage) {
-    if (storage->post != NULL)
-        freePost(storage->post);
-    free(storage);
+void freeStorage(Storage** storage) {
+    if(*storage == NULL)
+        return;
+
+    if ((*storage)->post == NULL) {
+        free(*storage);
+        *storage = NULL;
+        return;
+    }
+
+    for (size_t i = 0; i < (*storage)->capacity; ++i) {
+        if ((*storage)->post[i].tags == NULL)
+            continue;
+        else
+            free ((*storage)->post[i].tags);
+
+        if ((*storage)->post[i].comments == NULL)
+            continue;
+        else
+            free((*storage)->post[i].comments);
+    }
+
+    free((*storage)->post);
+    free(*storage);
+    (*storage) = NULL;
 }
 
 

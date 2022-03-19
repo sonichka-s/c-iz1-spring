@@ -9,7 +9,7 @@ int main() {
 
     fillStorage(s, "../input.txt");
     postFilter(s, 12, 20, 2, 9);
-    freeStorage(s);
+    freeStorage(&s);
 
     return 0;
 }
